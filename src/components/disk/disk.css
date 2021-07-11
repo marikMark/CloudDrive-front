@@ -1,0 +1,52 @@
+.Disk-container {
+    display: flex;
+    margin-left: 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+.Disk-create-btn {
+    width: 90px;
+    height: 40px;
+    line-height: 0px;
+    text-align: center;
+    background: white;
+    transition: .3s;
+    border: 0px;
+    border-radius: 45px;
+    color: #575757;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    box-shadow: 0 0px 8px #a3a3a3;
+}
+.Disk-create-btn:hover {
+    box-shadow: 0 0px 15px #a3a3a3;
+    background-color: #f7f7f7;
+}
+.dropdown-menu {
+    position: absolute;
+    margin-top: -40px;
+    transition: .2s;
+    box-shadow: 0 0px 15px #a3a3a3;
+}
+.dropdown-item {
+    transition: .3s;
+    color: #575757;
+    font-size: 12px;
+    cursor: pointer;
+}
+.dropdown-item IMG {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    margin-left: -10px;
+}
+.Disk-upload_file {
+    display: none;
+}
+.Disk-upload_folder {
+    display: none;
+}
