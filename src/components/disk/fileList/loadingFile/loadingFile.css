@@ -1,0 +1,39 @@
+.LoadingFile-container {
+    border-top: solid 1px #e3e3e3;
+    display: grid;
+    grid-template-columns: 1fr 9fr repeat(4, 1fr);
+    align-items: center;
+    height: 50px;
+    transition: .3s;
+}
+.LoadingFile-container:hover {
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.LoadingFile-img {
+    width: 30px;
+    height: 30px;
+    margin-left: 20px;
+}
+.LoadingFile-name {
+    grid-column-start: 2;
+    font-weight: bold;
+    color: #575757;
+}
+.LoadingFile-progress_bar {
+    grid-column-start: 5;
+    justify-self: center;
+    margin-right: -20px;
+    color: #707070;
+    width: 100px;
+    height: 7px;
+    border-radius: 45px;
+    background: #d6d6d6;
+}
+.LoadingFile-progress {
+    width: 0%;
+    height: 100%;
+    background: #a294ff;
+    border-radius: 45px;
+}
