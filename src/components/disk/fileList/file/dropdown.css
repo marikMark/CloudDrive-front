@@ -1,8 +1,0 @@
-.Dropdown-container {
-    position: absolute;
-    background: white;
-    box-shadow: 0 0px 15px #a3a3a3;
-    transition: .3s;
-    opacity: 0;
-    text-align: center;
-}
