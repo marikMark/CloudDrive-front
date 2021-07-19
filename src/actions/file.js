@@ -9,7 +9,7 @@ import { addUploadFile, changeUploadFile, removeUploadFile } from "../reducers/u
 
 export function getFiles(dirId) {
     return async dispatch => {
-        const res = await axios.get(`http://localhost:5000/api/drive/file/${dirId ? dirId : ''}`, {
+        const res = await axios.get(`https://clouddrive-back.herokuapp.com/api/drive/file/${dirId ? dirId : ''}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -20,7 +20,7 @@ export function getFiles(dirId) {
 
 export function createDir(dirId, dirName) {
     return async dispatch => {
-        const res = await axios.post(`http://localhost:5000/api/drive/folder`, {
+        const res = await axios.post(`https://clouddrive-back.herokuapp.com/api/drive/folder`, {
             name: dirName,
             parentId: dirId,
             type: 'dir'
@@ -49,7 +49,7 @@ export function uploadFile(dirId, file) {
             progress: 0
         };
         dispatch(addUploadFile(uploadFile));
-        const res = await axios.post('http://localhost:5000/api/drive/file', data, {
+        const res = await axios.post('https://clouddrive-back.herokuapp.com/api/drive/file', data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             },
@@ -74,7 +74,7 @@ export function updateFilePath(childFile, parentFile) {
             childFile,
             parentFile
         };
-        await axios.put('http://localhost:5000/api/drive/file/move', data, {
+        await axios.put('https://clouddrive-back.herokuapp.com/api/drive/file/move', data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -87,7 +87,7 @@ export function updateFilePath(childFile, parentFile) {
 export function removeFile(file) {
     return async dispatch => {
         console.log(file);
-        await axios.delete('http://localhost:5000/api/drive/file', {
+        await axios.delete('https://clouddrive-back.herokuapp.com/api/drive/file', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             },
@@ -99,7 +99,7 @@ export function removeFile(file) {
 
 export function renameFile({...data}) {
     return async dispatch => {
-        await axios.put('http://localhost:5000/api/drive/file/name', data, {
+        await axios.put('https://clouddrive-back.herokuapp.com/api/drive/file/name', data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -111,7 +111,7 @@ export function renameFile({...data}) {
 export function downloadFile(file) {
     return async dispatch => {
         console.log(file);
-        const res = await fetch(`http://localhost:5000/api/drive/file/download?_id=${file._id}`, {
+        const res = await fetch(`https://clouddrive-back.herokuapp.com/api/drive/file/download?_id=${file._id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -144,7 +144,7 @@ export function uploadFolder(files, parentId) {
             progress: 0
         };
         dispatch(addUploadFile(uploadFile));
-        const res = await axios.post('http://localhost:5000/api/drive/files', data, {
+        const res = await axios.post('https://clouddrive-back.herokuapp.com/api/drive/files', data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             },
@@ -175,7 +175,7 @@ export function getStatic(file) {
                 marginRight: 'auto'
             }
             player.controls = 'true';
-            player.src = `http://localhost:5000/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
+            player.src = `https://clouddrive-back.herokuapp.com/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
             player.preload = 'auto';
             player.autofocus = 'true';
             player.style.position = 'absolute';
@@ -206,10 +206,10 @@ export function getStatic(file) {
             const source = document.createElement('source');
             source.id = 'aim';
             source.type = `audio/${ext}`;
-            source.src = `http://localhost:5000/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
+            source.src = `https://clouddrive-back.herokuapp.com/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
             newWin.document.getElementById('audio-player').appendChild(source);
         } else {
-            window.open(`http://localhost:5000/?userId=${file.userId}&_id=${file._id}&ext=${ext}`, '_blank');
+            window.open(`https://clouddrive-back.herokuapp.com/?userId=${file.userId}&_id=${file._id}&ext=${ext}`, '_blank');
         }
     }
 }
