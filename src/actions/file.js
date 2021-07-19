@@ -64,6 +64,7 @@ export function uploadFile(dirId, file) {
         if(res.data.message) {
             return res.data.message;
         }
+        dispatch(removeUploadFile(uploadFile.id));
         dispatch(addFile(res.data));
     }
 }
@@ -159,8 +160,8 @@ export function uploadFolder(files, parentId) {
         if(res.data.message) {
             return res.data.message;
         }
-        dispatch(addFile(res.data));
         dispatch(removeUploadFile(uploadFile.id));
+        dispatch(addFile(res.data));
     }
 }
 
