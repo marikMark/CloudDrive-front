@@ -61,10 +61,10 @@ export function uploadFile(dirId, file) {
                 }
             }
         });
+        dispatch(removeUploadFile(uploadFile.id));
         if(res.data.message) {
             return res.data.message;
         }
-        dispatch(removeUploadFile(uploadFile.id));
         dispatch(addFile(res.data));
     }
 }
@@ -157,10 +157,10 @@ export function uploadFolder(files, parentId) {
                 }
             }
         });
+        dispatch(removeUploadFile(uploadFile.id));
         if(res.data.message) {
             return res.data.message;
         }
-        dispatch(removeUploadFile(uploadFile.id));
         dispatch(addFile(res.data));
     }
 }
