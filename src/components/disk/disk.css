@@ -1,6 +1,5 @@
 .Disk-container {
     display: flex;
-    margin-left: 10px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -10,6 +9,7 @@
 .Disk-create-btn {
     width: 90px;
     height: 40px;
+    margin-left: 10px;
     line-height: 0px;
     text-align: center;
     background: white;
@@ -50,14 +50,25 @@
 .Disk-upload_folder {
     display: none;
 }
-@media only screen and (max-width: 1100px) {
+/* @media only screen and (max-width: 1100px) {
     .Disk-btns {
         position: absolute;
         right: 105px;
     }
     .dropdown-menu {
         margin-right: 65px;
-        /* position: absolute; */
-        /* right: 100px; */
     }
+} */
+.Disk-pushNotification_container {
+    position: absolute;
+    right: 0;
+}
+.Disk-pushNotification {
+    width: 250px;
+    padding: 10px;
+    margin: 5px;
+    font-size: 13px;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: .6s;
 }

@@ -1,10 +1,7 @@
 import React from 'react';
 import './loadingFile.css';
-import { removeUploadFile } from '../../../../reducers/uploadReducer';
-import { useDispatch } from 'react-redux';
 
 const LoadingFile = ({file}) => {
-    const dispatch = useDispatch();
     return (
         <div
             tabIndex={1}

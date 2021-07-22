@@ -10,12 +10,14 @@ import mp3 from '../../../../assets/mp3.png';
 import json from '../../../../assets/json.png';
 import mp4 from '../../../../assets/mp4.png';
 import mov from '../../../../assets/mov.png';
+import wav from '../../../../assets/wav.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import {
     setCurrentDir,
     pushToStack,
-    setDraggingFile
+    setDraggingFile,
+    setCurrentDirName
 } from '../../../../reducers/fileReducer';
 import { updateFilePath, getStatic } from '../../../../actions/file';
 import Dropdown from './Dropdown';
@@ -36,12 +38,14 @@ const File = props => {
                 file.type === 'json' ? json :
                 file.type === 'mp4' ? mp4 :
                 file.type === 'mov' ? mov :
+                file.type === 'wav' ? wav :
                 txtFile;
     const dispatch = useDispatch();
     const currentDir = useSelector(state => state.files.currentDir);
     const draggingFile = useSelector(state => state.files.draggingFile);
     function doubleClickHandler(file) {
         if(file.type === 'dir') {
+            dispatch(setCurrentDirName([file.name, file._id]));
             dispatch(pushToStack(currentDir));
             dispatch(setCurrentDir(file._id));
             window.history.pushState({}, null, file._id);
@@ -51,11 +55,11 @@ const File = props => {
     }
     const focusHandler = (e, file) => {
         e.target.className = 'File-container-hover';
-        e.target.addEventListener('keydown', e => {
-            if(e.keyCode === 13) {
-                doubleClickHandler(file);
-            }
-        })
+        // e.target.addEventListener('keydown', e => {
+        //     if(e.keyCode === 13) {
+        //         doubleClickHandler(file);
+        //     }
+        // })
     }
     const blurHandler = e => {
         e.target.className = 'File-container';
@@ -112,6 +116,7 @@ const File = props => {
                     onBlur={(e) => blurHandler(e)}
                     onContextMenu={e => contextMenuHandler(e)}
                     onDoubleClick={() => doubleClickHandler(file)}
+                    onKeyDown={e => e.keyCode === 13 && doubleClickHandler(file)}
                     onDragStart={e => dragStartHandler(e, file)}
                     onDragLeave={e => dragLeaveHandler(e)}
                     onDragEnd={e => dragEndHandler(e)}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { renameFile } from '../../../../actions/file';
+import { addNotification } from '../../../../reducers/notificationReducer';
 import './popup.css';
 
 const Popup = props => {
@@ -21,17 +22,25 @@ const Popup = props => {
         file: props.file,
         newName
     }
+    const files = useSelector(state => state.files.files);
     function renameFileHandler() {
         data.newName = data.newName.replace(/ +/g, ' ').trim();
-        if(data.newName !== '') {
-            if(props.file.type !== 'dir') {
-                data.newType = data.newName.split('.').pop();
-            } else {
-                data.newType = 'dir';
-            }
-            dispatch(renameFile(data));
+        const nameExist = files.find(obj => obj.name === newName);
+        console.log(nameExist);
+        if(nameExist !== undefined) {
+            dispatch(addNotification(`File with name ${newName} already exists!`));
         } else {
-            alert('File can\'t be empty!');
+            if(data.newName !== '') {
+                if(props.file.type !== 'dir') {
+                    data.newType = data.newName.split('.').pop();
+                } else {
+                    data.newType = 'dir';
+                }
+                dispatch(renameFile(data));
+                document.getElementById(`btn-secondaryRename${props.id}`).click();
+            } else {
+                dispatch(addNotification('File can\'t be empty!'));
+            }
         }
     }
     return (
@@ -63,7 +72,7 @@ const Popup = props => {
                             />
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id={`btn-secondaryRename${props.id}`} className="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button
                             type="button"
                             className="btn btn-primary"

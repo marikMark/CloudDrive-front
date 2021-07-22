@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 .FileList-container {
-    width: 900px;
+    width: 70vw;
     margin: 20px auto;
     margin-bottom: 100px;
     white-space: nowrap;
@@ -16,6 +16,26 @@
     font-weight: bold;
     margin-bottom: 10px;
     margin-top: 10px;
+}
+.FileList-path_container {
+    display: grid;
+    grid-template-columns: 1fr 9fr repeat(4, 1fr);
+    align-items: center;
+    color: #575757;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.FileList-pathDir {
+    grid-column-start: 2;
+}
+.FileList-pathOneDir:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.FileList-path_sign {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 .FileList-name {
     grid-column-start: 2;
@@ -45,16 +65,26 @@
     box-shadow: 0 0px 10px #a3a3a3;
     background-color: #f7f7f7;
 }
-/* .FileList-File-enter-active {
-    animation: FileList-File-enter 500ms forwards;
+@media only screen and (max-width: 1100px) {
+    .FileList-container {
+        margin-top: 60px;
+    }
 }
-@keyframes FileList-File-enter {
-    0% {
-        opacity: 0;
-        transform: translateY(-50%);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-} */
+.FileList-drag_and_drop_area {
+    position: fixed;
+    left: 50%;
+    margin-left: -35vw;
+    width: 70vw;
+    height: 80vh;
+    border: 3px;
+    border-color: #b2b2b2;
+    border-style: dotted;
+    background: #ffffff;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: .3s;
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

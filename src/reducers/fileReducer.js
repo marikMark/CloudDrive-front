@@ -6,12 +6,18 @@ const SET_DRAGGING_FILE = 'SET_DRAGGING_FILE';
 const REMOVE_FROM_FILES = 'REMOVE_FROM_FILES';
 const RENAME_FILE = 'RENAME_FILE';
 const UPDATE_FILE = 'UPDATE_FILE';
+const SET_CURRENT_DIR_NAME = 'SET_CURRENT_DIR_NAME';
+const REMOVE_CURRENT_DIR_NAME = 'REMOVE_CURRENT_DIR_NAME';
+const REMOVE_FROM_STACK = 'REMOVE_FROM_STACK';
 
 const defaultState = {
     files: [],
     currentDir: 'null',
     dirStack: [],
-    draggingFile: null
+    draggingFile: null,
+    currentDirName: [
+        ['My Drive', 'null']
+    ]
 }
 
 export default function fileReducer(state = defaultState, action) {
@@ -37,7 +43,10 @@ export default function fileReducer(state = defaultState, action) {
         case PUSH_TO_STACK:
             return {
                 ...state,
-                dirStack: [...state.dirStack, action.payload]
+                dirStack: [
+                    ...state.dirStack,
+                    action.payload
+                ]
             }
         case SET_DRAGGING_FILE:
             return {
@@ -72,6 +81,30 @@ export default function fileReducer(state = defaultState, action) {
                 ...state,
                 files: [
                     ...state.files
+                ]
+            }
+        case SET_CURRENT_DIR_NAME:
+            return {
+                ...state,
+                currentDirName: [
+                    ...state.currentDirName,
+                    action.payload
+                ]
+            }
+        case REMOVE_CURRENT_DIR_NAME:
+            const endIndex = state.currentDirName.findIndex(id => id[1] === action.payload);
+            return {
+                ...state,
+                currentDirName: [
+                    ...state.currentDirName.slice(0, endIndex + 1)
+                ]
+            }
+        case REMOVE_FROM_STACK:
+            const index = state.dirStack.findIndex(id => id === action.payload);
+            return {
+                ...state,
+                dirStack: [
+                    ...state.dirStack.slice(0, index)
                 ]
             }
         default:
@@ -125,5 +158,23 @@ export const updateFile = file => {
     return {
         type: UPDATE_FILE,
         payload: file
+    }
+}
+export const setCurrentDirName = dirName => {
+    return {
+        type: SET_CURRENT_DIR_NAME,
+        payload: dirName
+    }
+}
+export const removeCurrentDirName = dirId => {
+    return {
+        type: REMOVE_CURRENT_DIR_NAME,
+        payload: dirId
+    }
+}
+export const removeFromStack = dirId => {
+    return {
+        type: REMOVE_FROM_STACK,
+        payload: dirId
     }
 }

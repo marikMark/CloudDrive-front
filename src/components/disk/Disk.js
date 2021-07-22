@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Alert } from 'react-bootstrap';
 import { getFiles, uploadFile, uploadFolder } from '../../actions/file';
 import FileList from './fileList/FileList';
 import './disk.css';
@@ -8,11 +9,13 @@ import uploadFileLogo from '../../assets/upload-file.png';
 import uploadFolderLogo from '../../assets/upload-folder.png';
 import createFolderLogo from '../../assets/create-folder.png';
 import Popup from './Popup';
+import { addNotification, removeNotification } from '../../reducers/notificationReducer';
 
 const Disk = () => {
     const dispatch = useDispatch();
     let currentDir = window.location.pathname.replace('/', '') === '' ? 'null' : window.location.pathname.replace('/', '');
     currentDir = useSelector(state => state.files.currentDir);
+    const pushNotifications = useSelector(state => state.notifications.pushNotifications);
     useEffect(() => {
         dispatch(getFiles(currentDir));
         document.addEventListener('scroll', scrollHandler);
@@ -22,8 +25,7 @@ const Disk = () => {
         files.forEach(async file => {
             let result = await dispatch(uploadFile(currentDir, file));
             if(result === 'fileExist') {
-                console.log('xui');
-                alert('File already exist!');
+                dispatch(addNotification('File already exist!'));
             }
         });
     }
@@ -32,7 +34,7 @@ const Disk = () => {
         console.log(files);
         const result = await dispatch(uploadFolder(files, currentDir));
         if(result === 'dirExist') {
-            alert('Directory already exist!');
+            dispatch(addNotification('Directory already exist!'));
         }
     }
     const scrollHandler = () => {
@@ -54,6 +56,11 @@ const Disk = () => {
                 button.transition = '.3s';
             }, 5);
         }
+    }
+    const notificationClickHandler = (e, notification) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dispatch(removeNotification(notification.id));
     }
     return (
         <div className='Disk-container'>
@@ -104,6 +111,19 @@ const Disk = () => {
             </div>
             <FileList />
             <Popup />
+            <div className='Disk-pushNotification_container'>
+            {
+                pushNotifications.map(notification =>
+                    <Alert key={notification.id}
+                        variant='secondary'
+                        className='Disk-pushNotification'
+                        onClick={e => notificationClickHandler(e, notification)}
+                    >
+                        {notification.message}
+                    </Alert>
+                )
+            }
+            </div>
         </div>
     );
 }
