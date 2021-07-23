@@ -6,7 +6,7 @@ import 'dotenv'
 export const login = () => {
     return async dispatch => {
         dispatch(setLoading(true));
-        const res = await axios.get(`${process.env.API_URL}/auth/login`);
+        const res = await axios.get(`https://clouddrive-back.herokuapp.com/api/auth/login`);
         const {user} = res.data;
         const {token} = res.data;
         dispatch(setUser(user));
@@ -17,7 +17,7 @@ export const login = () => {
 
 export const auth = () => {
     return async dispatch => {
-        const res = await axios.get(`${process.env.API_URL}/auth/check`, {
+        const res = await axios.get(`https://clouddrive-back.herokuapp.com/api/auth/check`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
