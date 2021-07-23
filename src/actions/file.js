@@ -9,8 +9,7 @@ import { addUploadFile, changeUploadFile, removeUploadFile } from "../reducers/u
 
 export function getFiles(dirId) {
     return async dispatch => {
-        const res = await axios.get(`http://localhost:5000/api/drive/file/${dirId ? dirId : ''}`, {
-        // const res = await axios.get(`http://37.57.6.186:5000/api/drive/file/${dirId ? dirId : ''}`, {
+        const res = await axios.get(`${process.env.API_URL}/drive/file/${dirId ? dirId : ''}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -21,8 +20,7 @@ export function getFiles(dirId) {
 
 export function createDir(dirId, dirName) {
     return async dispatch => {
-        const res = await axios.post(`http://localhost:5000/api/drive/folder`, {
-        // const res = await axios.post(`http://37.57.6.186:5000/api/drive/folder`, {
+        const res = await axios.post(`${process.env.API_URL}/drive/folder`, {
             name: dirName,
             parentId: dirId,
             type: 'dir'
@@ -51,8 +49,7 @@ export function uploadFile(dirId, file) {
             progress: 0
         };
         dispatch(addUploadFile(uploadFile));
-        const res = await axios.post('http://localhost:5000/api/drive/file', data, {
-        // const res = await axios.post('http://37.57.6.186:5000/api/drive/file', data, {
+        const res = await axios.post(`${process.env.API_URL}/drive/file`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             },
@@ -79,8 +76,7 @@ export function updateFilePath(childFile, parentFile) {
             childFile,
             parentFile
         };
-        await axios.put('http://localhost:5000/api/drive/file/move', data, {
-        // await axios.put('http://37.57.6.186:5000/api/drive/file/move', data, {
+        await axios.put(`${process.env.API_URL}/drive/file/move`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -93,8 +89,7 @@ export function updateFilePath(childFile, parentFile) {
 export function removeFile(file) {
     return async dispatch => {
         console.log(file);
-        await axios.delete('http://localhost:5000/api/drive/file', {
-        // await axios.delete('http://37.57.6.186:5000/api/drive/file', {
+        await axios.delete(`${process.env.API_URL}/drive/file`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             },
@@ -106,8 +101,7 @@ export function removeFile(file) {
 
 export function renameFile({...data}) {
     return async dispatch => {
-        await axios.put('http://localhost:5000/api/drive/file/name', data, {
-        // await axios.put('http://37.57.6.186:5000/api/drive/file/name', data, {
+        await axios.put(`${process.env.API_URL}/drive/file/name`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -119,8 +113,7 @@ export function renameFile({...data}) {
 export function downloadFile(file) {
     return async dispatch => {
         console.log(file);
-        const res = await fetch(`http://localhost:5000/api/drive/file/download?_id=${file._id}`, {
-        // const res = await fetch(`http://37.57.6.186:5000/api/drive/file/download?_id=${file._id}`, {
+        const res = await fetch(`${process.env.API_URL}/drive/file/download?_id=${file._id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -153,8 +146,7 @@ export function uploadFolder(files, parentId) {
             progress: 0
         };
         dispatch(addUploadFile(uploadFile));
-        const res = await axios.post('http://localhost:5000/api/drive/files', data, {
-        // const res = await axios.post('http://37.57.6.186:5000/api/drive/files', data, {
+        const res = await axios.post(`${process.env.API_URL}/drive/files`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             },
@@ -185,8 +177,7 @@ export function getStatic(file) {
                 marginRight: 'auto'
             }
             player.controls = 'true';
-            player.src = `http://localhost:5000/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
-            // player.src = `http://37.57.6.186:5000/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
+            player.src = `${process.env.API_URL}/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
             player.preload = 'auto';
             player.autofocus = 'true';
             player.style.position = 'absolute';
@@ -218,16 +209,14 @@ export function getStatic(file) {
             const source = document.createElement('source');
             source.id = 'aim';
             source.type = `audio/${ext}`;
-            source.src = `http://localhost:5000/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
-            // source.src = `http://37.57.6.186:5000/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
+            source.src = `${process.env.API_URL}/?userId=${file.userId}&_id=${file._id}&ext=${ext}`;
             if(newWin !== 'null') {
                 newWin.document.body.style.background = 'black';
                 newWin.document.body.append(player);
                 newWin.document.getElementById('audio-player').appendChild(source);
             }
         } else {
-            window.open(`http://localhost:5000/?userId=${file.userId}&_id=${file._id}&ext=${ext}`, '_blank');
-            // window.open(`http://37.57.6.186:5000/?userId=${file.userId}&_id=${file._id}&ext=${ext}`, '_blank');
+            window.open(`${process.env.API_URL}/?userId=${file.userId}&_id=${file._id}&ext=${ext}`, '_blank');
         }
     }
 }
