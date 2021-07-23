@@ -2,6 +2,7 @@
 
 .FileList-container {
     width: 70vw;
+    min-height: 80vh;
     margin: 20px auto;
     margin-bottom: 100px;
     white-space: nowrap;
